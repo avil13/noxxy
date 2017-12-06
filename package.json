@@ -1,6 +1,6 @@
 {
   "name": "noxxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "noxxy.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "url": "https://github.com/avil13/noxxy"
   },
   "bin" : { 
-    "noxxy" : "./noxy.js" 
+    "noxxy" : "./noxxy.js" 
   },
   "author": "avil13",
   "license": "ISC",
