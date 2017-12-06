@@ -1,0 +1,13 @@
+{
+    "server": {
+        "hostname": "",
+        "port": 5050
+    },
+    "default": { "target": "http://localhost:8080" },
+    "domains": {
+        ".*/dev/.*": { 
+            "rm": "/dev",
+            "target": "http://localhost:9090" 
+        }
+    }
+}
