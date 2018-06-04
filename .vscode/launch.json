@@ -8,9 +8,9 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/noxy.js",
+            "program": "${workspaceFolder}/noxxy.js",
             "args": [
-                "-c", "example.config.json"
+                "-c", "config.json"
             ]
         }
     ]

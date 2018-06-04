@@ -1,0 +1,15 @@
+{
+    "server": {
+        "hostname": "",
+        "port": 5050
+    },
+    "default": { "target": "http://localhost:8080" },
+    "domains": {
+        "/api/": { 
+            "target": "http://test.ru" 
+        },
+        "/login": { 
+            "target": "http://test.ru" 
+        }
+    }
+}
