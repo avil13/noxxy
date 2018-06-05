@@ -6,10 +6,10 @@
     "default": { "target": "http://localhost:8080" },
     "domains": {
         "/api/": { 
-            "target": "http://test.ru" 
+            "target": "http://lab.swew.loc" 
         },
-        "/login": { 
-            "target": "http://test.ru" 
+        "/(login|logout|register)": { 
+            "target": "http://lab.swew.loc" 
         }
     }
 }

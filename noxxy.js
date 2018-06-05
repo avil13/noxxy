@@ -2,7 +2,6 @@
 
 /*jshint strict:false*/
 require('colors');
-const url = require('url');
 ('use strict');
 
 var http = require('http'),
@@ -13,6 +12,8 @@ var http = require('http'),
         .version(require('./package.json').version)
         .option('-c, --config [configurationFile]', 'Set the configuration to use', false)
         .parse(process.argv),
+
+
     /**
      * load the given configuration path
      * @param {string} configPath
@@ -52,6 +53,14 @@ getConfig(program.config)
         var proxy = httpProxy.createProxyServer({ ws: true }).on('error', function(err) {
             console.log('Proxy Error : '.red, err);
         });
+
+        proxy.on('proxyReq', function(proxyReq, req, res, options) {
+            proxyReq.setHeader('Host', options.target.host);
+        });
+        // proxy.on('proxyRes', function(proxyRes, req, res, options) {
+        //     console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
+        // });
+        
         // Create a main server
         http
             .createServer(function(req, res) {
@@ -62,10 +71,6 @@ getConfig(program.config)
                     proxy.web(req, res, { target: domain.target });
                     console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
                     // 
-                    proxy.on('proxyReq', function(proxyReq, req, res, options) {
-                        const _u = url.parse(domain.target);
-                        proxyReq.setHeader('Host', _u.host);
-                    });
                 } catch (err) {
                     console.log('Proxy Error'.red, err);
                 }
@@ -81,15 +86,14 @@ getConfig(program.config)
                     console.log('Proxy Error'.red, err);
                 }
             })
-            // .on('proxyReq', function(proxyReq, req, res, options) {
-            // 	proxyReq.setHeader('Via', 'Noxy '.program.version);
-            // })
             .listen(config.server.port, config.server.hostname);
         console.log('NOXXY Server running on'.green, (config.server.hostname ? '' + config.server.hostname : '*').magenta + ':' + ('' + config.server.port).cyan);
     })
     .catch(function(err) {
         console.log('Error'.red, err);
     });
+
+
 
 let host_lists = [];
 let host_lists_patterns = [];
