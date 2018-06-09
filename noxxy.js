@@ -69,19 +69,7 @@ getConfig(program.config)
             : {};
 
         // Create a main server
-        (program.ssl ? https : http)
-            .createServer(http_options, function(req, res) {
-                try {
-                    const host = req.headers.host;
-                    const domain = parseRequest(config, req);
-
-                    proxy.web(req, res, { target: domain.target });
-                    console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
-                    //
-                } catch (err) {
-                    console.log('Proxy Error'.red, err);
-                }
-            })
+        (program.ssl ? https.createServer(http_options, _proxyHttp) : http.createServer(_proxyHttp))
             .on('upgrade', function(req, socket, head) {
                 try {
                     const host = req.headers.host;
@@ -94,10 +82,11 @@ getConfig(program.config)
                 }
             })
             .listen(config.server.port, config.server.hostname);
-        console.log('NOXXY Server running on'.green, (config.server.hostname ? '' + config.server.hostname : '*').magenta + ':' + ('' + config.server.port).cyan);
+        console.log('NOXXY Server running on'.green, (program.ssl ? 'https://' : 'http://') + (config.server.hostname ? '' + config.server.hostname : '*').magenta + ':' + ('' + config.server.port).cyan);
     })
     .catch(function(err) {
-        console.log('Error'.red, err);
+        console.log('Error'.red);
+        console.error(err);
     });
 
 let host_lists = [];
@@ -123,4 +112,17 @@ function parseRequest(config, req) {
     // }
 
     return domain;
+}
+
+function _proxyHttp(req, res) {
+    try {
+        const host = req.headers.host;
+        const domain = parseRequest(config, req);
+
+        proxy.web(req, res, { target: domain.target });
+        console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
+        //
+    } catch (err) {
+        console.log('Proxy Error'.red, err);
+    }
 }
