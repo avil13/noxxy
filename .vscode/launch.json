@@ -7,10 +7,20 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "run",
             "program": "${workspaceFolder}/noxxy.js",
             "args": [
                 "-c", "config.json"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "run ssl",
+            "program": "${workspaceFolder}/noxxy.js",
+            "args": [
+                "-c", "config.json",
+                "-s"
             ]
         }
     ]

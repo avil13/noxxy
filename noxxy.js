@@ -5,15 +5,15 @@ require('colors');
 ('use strict');
 
 var http = require('http'),
+    https = require('https'),
     fs = require('fs'),
     httpProxy = require('http-proxy'),
     stripJson = require('strip-json-comments'),
     program = require('commander')
         .version(require('./package.json').version)
         .option('-c, --config [configurationFile]', 'Set the configuration to use', false)
+        .option('-s, --ssl [with ssl]', 'Set use https', false)
         .parse(process.argv),
-
-
     /**
      * load the given configuration path
      * @param {string} configPath
@@ -51,7 +51,7 @@ getConfig(program.config)
     .then(function(config) {
         // Create a proxy server with custom application logic
         var proxy = httpProxy.createProxyServer({ ws: true }).on('error', function(err) {
-            console.log('Proxy Error : '.red, err);
+            console.error('Proxy Error : '.red, err);
         });
 
         proxy.on('proxyReq', function(proxyReq, req, res, options) {
@@ -60,17 +60,24 @@ getConfig(program.config)
         // proxy.on('proxyRes', function(proxyRes, req, res, options) {
         //     console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
         // });
-        
+        const http_options = program.ssl
+            ? {
+                  key: fs.readFileSync(__dirname + '/ssl/key.pem', 'utf8'),
+                  cert: fs.readFileSync(__dirname + '/ssl/cert.pem', 'utf8'),
+                  passphrase: '1234'
+              }
+            : {};
+
         // Create a main server
-        http
-            .createServer(function(req, res) {
+        (program.ssl ? https : http)
+            .createServer(http_options, function(req, res) {
                 try {
                     const host = req.headers.host;
                     const domain = parseRequest(config, req);
 
                     proxy.web(req, res, { target: domain.target });
                     console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
-                    // 
+                    //
                 } catch (err) {
                     console.log('Proxy Error'.red, err);
                 }
@@ -92,8 +99,6 @@ getConfig(program.config)
     .catch(function(err) {
         console.log('Error'.red, err);
     });
-
-
 
 let host_lists = [];
 let host_lists_patterns = [];
