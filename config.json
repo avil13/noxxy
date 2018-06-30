@@ -3,7 +3,7 @@
         "hostname": "",
         "port": 5050
     },
-    "default": { "target": "http://localhost:8080" },
+    "default": { "target": "http://localhost:3000" },
     "domains": {
         "/api/": { 
             "target": "http://lab.swew.loc" 

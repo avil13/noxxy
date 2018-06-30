@@ -54,6 +54,8 @@ getConfig(program.config)
             console.error('Proxy Error : '.red, err);
         });
 
+        const _proxyHttp = proxyHttp(config, proxy);
+
         proxy.on('proxyReq', function(proxyReq, req, res, options) {
             proxyReq.setHeader('Host', options.target.host);
         });
@@ -114,15 +116,17 @@ function parseRequest(config, req) {
     return domain;
 }
 
-function _proxyHttp(req, res) {
-    try {
-        const host = req.headers.host;
-        const domain = parseRequest(config, req);
+function proxyHttp(config, proxy) {
+    return function (req, res) {
+        try {
+            const host = req.headers.host;
+            const domain = parseRequest(config, req);
 
-        proxy.web(req, res, { target: domain.target });
-        console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
-        //
-    } catch (err) {
-        console.log('Proxy Error'.red, err);
-    }
+            proxy.web(req, res, { target: domain.target });
+            console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
+            //
+        } catch (err) {
+            console.log('Proxy Error'.red, err);
+        }
+    };
 }
