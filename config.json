@@ -5,10 +5,20 @@
     },
     "default": { "target": "http://localhost:3000" },
     "domains": {
-        "/api/": { 
+        "^/api/": { 
+            "target": "http://diadiary.loc" 
+        },
+        "^/(login|logout|register)": { 
+            "target": "http://diadiary.loc" 
+        },
+        "/avatar": { 
+            "target": "http://diadiary.loc" 
+        },
+ 
+        "xxx/api/": { 
             "target": "http://lab.swew.loc" 
         },
-        "/(login|logout|register)": { 
+        "xxx/(login|logout|register)": { 
             "target": "http://lab.swew.loc" 
         }
     }

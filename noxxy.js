@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+//#!/usr/bin/env node
 
 /*jshint strict:false*/
 require('colors');
@@ -103,7 +103,7 @@ function parseRequest(config, req) {
     }
 
     for (let i = 0; i < host_lists.length; i++) {
-        if (host_lists_patterns[i].test(req.headers.host + req.url)) {
+        if (host_lists_patterns[i].test(req.url)) {
             domain = config.domains[host_lists[i]];
             break;
         }
