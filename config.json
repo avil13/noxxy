@@ -14,6 +14,10 @@
         "/avatar": { 
             "target": "http://diadiary.loc" 
         },
+        "^/social_login/": { 
+            "target": "http://diadiary.loc" 
+        },
+ 
  
         "xxx/api/": { 
             "target": "http://lab.swew.loc" 
