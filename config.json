@@ -8,7 +8,7 @@
         "^/api/": { 
             "target": "http://diadiary.loc" 
         },
-        "^/(login|logout|register)": { 
+        "^/(login|logout|register|password)": { 
             "target": "http://diadiary.loc" 
         },
         "/avatar": { 
