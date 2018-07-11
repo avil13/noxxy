@@ -59,6 +59,11 @@ getConfig(program.config)
         proxy.on('proxyReq', function(proxyReq, req, res, options) {
             proxyReq.setHeader('Host', options.target.host);
         });
+        proxy.on('error', function(error, req, res, options) {
+            res.writeHead(503, {'Content-Type': 'text/plain'});
+            res.write(error.message);
+            res.end();
+        });
         // proxy.on('proxyRes', function(proxyRes, req, res, options) {
         //     console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
         // });
@@ -122,11 +127,13 @@ function proxyHttp(config, proxy) {
             const host = req.headers.host;
             const domain = parseRequest(config, req);
 
+
+
             proxy.web(req, res, { target: domain.target });
-            console.log('Web'.bgWhite.blue, host.grey, domain.target.green + '' + req.url);
+            console.log('Web'.bgWhite.blue, req.method.yellow, domain.target.green + '' + req.url);
             //
         } catch (err) {
-            console.log('Proxy Error'.red, err);
+            console.log('Proxy error'.red, err);
         }
     };
 }
