@@ -1,30 +1,42 @@
 {
-  "name": "noxxy",
-  "version": "1.1.1",
-  "description": "",
-  "main": "noxxy.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "proxy",
-    "http",
-	"websockets",
-	"server"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/avil13/noxxy"
-  },
-  "bin" : { 
-    "noxxy" : "./noxxy.js" 
-  },
-  "author": "avil13",
-  "license": "ISC",
-  "dependencies": {
-    "colors": "^1.1.2",
-    "commander": "^2.12.2",
-    "http-proxy": "^1.16.2",
-    "strip-json-comments": "^2.0.1"
-  }
+    "name": "noxxy",
+    "version": "2.0.0-beta.0",
+    "description": "",
+    "main": "noxxy.js",
+    "scripts": {
+        "test": "jest",
+        "test:w": "npm t -- --watch"
+    },
+    "keywords": [
+        "proxy",
+        "http",
+        "websockets",
+        "server"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/avil13/noxxy"
+    },
+    "bin": {
+        "noxxy": "./noxxy.js"
+    },
+    "author": "avil13",
+    "license": "ISC",
+    "dependencies": {
+        "colors": "^1.1.2",
+        "commander": "^2.12.2",
+        "http-proxy": "^1.16.2",
+        "strip-json-comments": "^2.0.1"
+    },
+    "devDependencies": {
+        "ts-jest": "^24.0.0",
+        "ts-node": "^8.0.2",
+        "typescript": "^3.3.3333",
+        "@babel/core": "*",
+        "@babel/preset-env": "*",
+        "@babel/preset-typescript": "*",
+        "@types/jest": "^24.0.9",
+        "babel-jest": "*",
+        "jest": "*"
+    }
 }

@@ -3,14 +3,25 @@
     // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
     // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
+    "configurations": [{
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Node",
             "program": "${workspaceFolder}/noxy.js",
             "args": [
                 "-c", "example.config.json"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "TS",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
+            "args": [
+                "${workspaceFolder}/index.ts"
             ]
         }
     ]
