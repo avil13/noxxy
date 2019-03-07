@@ -32,8 +32,8 @@
         "moduleResolution": "node",
         "baseUrl": "./",
         "paths": {
-            "~/*": ["./*"],
-            "@/*": ["./*"]
+            "~/*": ["./node_modules"],
+            "@/*": ["./src"]
         },
         "rootDirs": [],
         "typeRoots": [],

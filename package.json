@@ -23,10 +23,10 @@
     "author": "avil13",
     "license": "ISC",
     "dependencies": {
-        "colors": "^1.1.2",
         "commander": "^2.12.2",
         "http-proxy": "^1.16.2",
-        "strip-json-comments": "^2.0.1"
+        "strip-json-comments": "^2.0.1",
+        "tslib": "^1.9.3"
     },
     "devDependencies": {
         "@babel/core": "*",

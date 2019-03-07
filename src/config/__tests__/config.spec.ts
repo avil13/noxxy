@@ -1,5 +1,5 @@
-// import { checkExists } from '../index';
+import { checkExists } from '../index';
 
 it('Test checkExists', () => {
-    expect(true).toBe(true);
+    expect(checkExists()).toBe(false);
 });

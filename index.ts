@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
-/*jshint strict:false*/
-require('colors');
+import args from './src/lib/arguments';
+import { getConfig } from './src/config'
+
 "use strict";
+
+
 
 var http = require('http'),
     fs = require('fs'),
@@ -58,10 +61,10 @@ getConfig(program.config)
                 const host = req.headers.host;
                 const domain = parseRequest(config, req);
 
-                console.log('Web'.bgWhite.blue, host.grey, domain.target.green, req.url);
+                console.log('Web', host.grey, domain.target.green, req.url);
                 proxy.web(req, res, { target: domain.target });
             } catch (err) {
-                console.log('Proxy Error'.red, err);
+                console.log('Proxy Error', err);
             }
         })
             .on("upgrade", function (req, socket, head) {
@@ -69,17 +72,18 @@ getConfig(program.config)
                     const host = req.headers.host;
                     const domain = parseRequest(config, req);
 
-                    console.log('WebSocket'.bgWhite.green, host.grey, domain.target.green);
+                    console.log('WebSocket', host.grey, domain.target.green);
                     proxy.ws(req, socket, head, { target: domain.target });
                 } catch (err) {
-                    console.log('Proxy Error'.red, err);
+                    console.log('Proxy Error', err);
                 }
             })
             // .on('proxyReq', function(proxyReq, req, res, options) {
             // 	proxyReq.setHeader('Via', 'Noxy '.program.version);
             // })
             .listen(config.server.port, config.server.hostname);
-        console.log('NOXY Server running on'.green, (config.server.hostname ? '' + config.server.hostname : '*').magenta + ':' + ('' + config.server.port).cyan);
+
+        console.log('NOXY Server running on', (config.server.hostname ? '' + config.server.hostname : '*').magenta + ':' + ('' + config.server.port).cyan);
     })
     .catch(function (err) {
         console.log("Error".red, err);
